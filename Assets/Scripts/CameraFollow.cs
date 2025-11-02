@@ -4,7 +4,7 @@ public class CameraFollow : MonoBehaviour
 {
     public Transform target;
     public Vector3 offset;
-    [SerializeField] float smoothSpeed = 5f; // cat de repede prinde din urma playerul
+    [SerializeField] float smoothSpeed = 8f; // cat de repede prinde din urma playerul
 
     void LateUpdate()
     {
