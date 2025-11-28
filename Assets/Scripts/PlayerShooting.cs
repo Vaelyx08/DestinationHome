@@ -2,17 +2,19 @@ using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
+    public GameObject bulletPrefab;
+    public Transform firePoint;
+    public float bulletSpeed = 15f;
+
     public int maxAmmoInGun = 6;
     public int currentAmmoInGun = 6;
     public int ammoReserve = 0;
 
     public KeyCode reloadKey = KeyCode.R;
 
-
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)) // Click stanga
         {
             Shoot();
         }
@@ -31,16 +33,19 @@ public class PlayerShooting : MonoBehaviour
             return;
         }
 
-        currentAmmoInGun=currentAmmoInGun-1;
+        currentAmmoInGun = currentAmmoInGun - 1;
 
-        // Aici adaugam shooting logic
-        Debug.Log("Bang! Ammo loaded: "+currentAmmoInGun);
+        // Aici instantiem glontul ca in varianta ta originala
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        bullet.GetComponent<Rigidbody>().velocity = firePoint.forward * bulletSpeed;
+        Destroy(bullet, 2f); // se sterge automat dupa 2 sec
 
+        Debug.Log("Bang! Ammo loaded: " + currentAmmoInGun);
     }
 
     public void AddAmmo(int amount)
     {
-        ammoReserve=ammoReserve+amount;
+        ammoReserve = ammoReserve + amount;
     }
 
     void Reload()
@@ -54,10 +59,7 @@ public class PlayerShooting : MonoBehaviour
         currentAmmoInGun = 0; // Pierdem ce aveam incarcat
         int loadAmount = Mathf.Min(maxAmmoInGun, ammoReserve);
         currentAmmoInGun = loadAmount;
-        ammoReserve=ammoReserve-loadAmount;
-        Debug.Log("Realoded. Ammo in gun: "+currentAmmoInGun);
-
+        ammoReserve = ammoReserve - loadAmount;
+        Debug.Log("Reloaded. Ammo in gun: " + currentAmmoInGun);
     }
-
-
 }
