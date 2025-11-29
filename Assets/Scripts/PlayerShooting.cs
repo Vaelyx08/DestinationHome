@@ -12,6 +12,14 @@ public class PlayerShooting : MonoBehaviour
 
     public KeyCode reloadKey = KeyCode.R;
 
+    private HUD hud;
+
+    void Start()
+    {
+        hud = FindObjectOfType<HUD>();
+        hud.UpdateAmmo(currentAmmoInGun, ammoReserve);
+    }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0)) // Click stanga
@@ -34,10 +42,11 @@ public class PlayerShooting : MonoBehaviour
         }
 
         currentAmmoInGun = currentAmmoInGun - 1;
+        hud.UpdateAmmo(currentAmmoInGun, ammoReserve);
 
         // Aici instantiem glontul ca in varianta ta originala
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        bullet.GetComponent<Rigidbody>().velocity = firePoint.forward * bulletSpeed;
+        bullet.GetComponent<Rigidbody>().linearVelocity = firePoint.forward * bulletSpeed;
         Destroy(bullet, 2f); // se sterge automat dupa 2 sec
 
         Debug.Log("Bang! Ammo loaded: " + currentAmmoInGun);
@@ -46,6 +55,7 @@ public class PlayerShooting : MonoBehaviour
     public void AddAmmo(int amount)
     {
         ammoReserve = ammoReserve + amount;
+        hud.UpdateAmmo(currentAmmoInGun,ammoReserve);
     }
 
     void Reload()
@@ -60,6 +70,7 @@ public class PlayerShooting : MonoBehaviour
         int loadAmount = Mathf.Min(maxAmmoInGun, ammoReserve);
         currentAmmoInGun = loadAmount;
         ammoReserve = ammoReserve - loadAmount;
+        hud.UpdateAmmo(currentAmmoInGun, ammoReserve);
         Debug.Log("Reloaded. Ammo in gun: " + currentAmmoInGun);
     }
 }

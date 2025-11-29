@@ -10,12 +10,15 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         currentHealth=maxHealth;
+        hud = FindObjectOfType<HUD>();
+        hud.UpdateHP(currentHealth);
     }
 
     public void TakeDamage(int amount) // 1 damage from most enemies
     {
         currentHealth = currentHealth - amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // just in case we add fractional damage
+        hud.UpdateHP(currentHealth);
         if (currentHealth <= 0) 
         {
             RestartLevel();
@@ -30,6 +33,8 @@ public class PlayerHealth : MonoBehaviour
     public void Heal()
     {
         currentHealth = maxHealth;
+        hud.UpdateHP(currentHealth);
     }
 
+    private HUD hud;
 }
