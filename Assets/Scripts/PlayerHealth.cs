@@ -14,20 +14,34 @@ public class PlayerHealth : MonoBehaviour
         hud.UpdateHP(currentHealth);
     }
 
-    public void TakeDamage(int amount) // 1 damage from most enemies
+    public void TakeDamage(int amount)
     {
         currentHealth = currentHealth - amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // just in case we add fractional damage
-        hud.UpdateHP(currentHealth);
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); 
+        
+        if (hud != null)
+        {
+             hud.UpdateHP(currentHealth);
+        }
+
         if (currentHealth <= 0) 
         {
-            RestartLevel();
+            PlayerDied(); 
         }
     }
 
-    void RestartLevel()
+    void PlayerDied()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.PlayerDied(); // Incarca DeathScreen
+        }
+        else
+        {
+             // Fallback in caz ca GameManager nu e in scena (util pentru testare)
+             Debug.Log("GameManager nu a fost gasit. Jucatorul a murit. Incarca scena curenta (Test)");
+             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     public void Heal()
