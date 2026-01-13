@@ -2,32 +2,33 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
-
     public float interactDistance = 3f;
     public KeyCode interactKey = KeyCode.E;
 
     void Update()
     {
-        if(Input.GetKeyDown(interactKey))
+        if (Input.GetKeyDown(interactKey))
         {
-           InteractWithDoors();
+            TryInteract();
         }
     }
 
-    void InteractWithDoors() {
-        Collider[] hits = Physics.OverlapSphere(transform.position, interactDistance);
+    void TryInteract()
+    {
+        Ray ray = new Ray(transform.position, transform.forward);
 
-        foreach (Collider hit in hits)
+        if (Physics.Raycast(ray, out RaycastHit hit, interactDistance))
         {
-            Door door = hit.GetComponent<Door>();
-            if (door == null)
-                door = hit.GetComponentInParent<Door>();
+            Door door = hit.collider.GetComponent<Door>() 
+                     ?? hit.collider.GetComponentInParent<Door>();
+
             if (door != null)
             {
                 door.ToggleDoor();
-                break;
             }
         }
-    }
 
+        // DEBUG vizual (foarte important)
+        Debug.DrawRay(transform.position, transform.forward * interactDistance, Color.yellow, 1f);
+    }
 }

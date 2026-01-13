@@ -8,6 +8,12 @@ public class Bullet : MonoBehaviour
     // Asigura-te ca GameObject-ul glontului are un Collider setat pe IsTrigger = true
     void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Obstacles"))
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         if (other.CompareTag("Player") && isPlayerBullet)
         {
             return;

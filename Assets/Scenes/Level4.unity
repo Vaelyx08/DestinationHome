@@ -2114,6 +2114,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 532120317448698061, guid: 12cf8e34e90d37945b610c9ac5553fec, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500867691185230551, guid: 12cf8e34e90d37945b610c9ac5553fec, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500867691185230551, guid: 12cf8e34e90d37945b610c9ac5553fec, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500867691185230551, guid: 12cf8e34e90d37945b610c9ac5553fec, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -453
+      objectReference: {fileID: 0}
     - target: {fileID: 4029362990293374149, guid: 12cf8e34e90d37945b610c9ac5553fec, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2203,6 +2219,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12cf8e34e90d37945b610c9ac5553fec, type: 3}
+--- !u!114 &953385285 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 532120317448698061, guid: 12cf8e34e90d37945b610c9ac5553fec, type: 3}
+  m_PrefabInstance: {fileID: 953385284}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &962046405
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4127,6 +4154,56 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7198904304689689419, guid: dfdf82a1fd3db2d4bb264196c3c5c2de, type: 3}
   m_PrefabInstance: {fileID: 1908953700}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1933799928
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1933799930}
+  - component: {fileID: 1933799929}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1933799929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1933799928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfd2887c04f44be4b80c4b892cd981dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractUIController
+  playerCamera: {fileID: 939751239}
+  interactDistance: 3
+  doorLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  interactText: {fileID: 953385285}
+--- !u!4 &1933799930
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1933799928}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 231.65411, y: 0, z: 157.7617}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1959823886
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4773,3 +4850,4 @@ SceneRoots:
   - {fileID: 838602195}
   - {fileID: 901660853}
   - {fileID: 991237610}
+  - {fileID: 1933799930}

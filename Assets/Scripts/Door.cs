@@ -1,40 +1,73 @@
 using UnityEngine;
+using UnityEngine.AI;
+using System.Collections;
 
 public class Door : MonoBehaviour
 {
-
     public bool isOpen = false;
-    public float openAngle=90f;
-    public float openSpeed=4f;
-    private UnityEngine.AI.NavMeshObstacle obstacle;
+    public float openAngle = 90f;
+    public float openSpeed = 4f;
+
+    private bool blockedByPlayer = false;
+
+    private NavMeshObstacle obstacle;
 
     private Quaternion closedRotation;
     private Quaternion openRotation;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Awake()
+    {
+        obstacle = GetComponent<NavMeshObstacle>();
+    }
+
     void Start()
     {
-        closedRotation=transform.rotation;
-        openRotation=Quaternion.Euler(transform.eulerAngles + new Vector3(0,openAngle, 0));
-        if (obstacle != null) obstacle.carving = true;
+        closedRotation = transform.rotation;
+        openRotation = Quaternion.Euler(transform.eulerAngles + Vector3.up * openAngle);
+
+        if (obstacle != null)
+        {
+            obstacle.carving = true;
+            obstacle.enabled = true; // închis
+        }
     }
 
     public void ToggleDoor()
     {
-        isOpen=!isOpen;
-        if (obstacle != null) obstacle.enabled =!obstacle.enabled;
+        isOpen = !isOpen;
         StopAllCoroutines();
-        StartCoroutine(RotateDoor(isOpen ? openRotation : closedRotation));
+        StartCoroutine(RotateDoor(isOpen));
     }
 
-    private System.Collections.IEnumerator RotateDoor(Quaternion targetRotation)
+    private IEnumerator RotateDoor(bool open)
     {
-        while (Quaternion.Angle(transform.rotation, targetRotation)>0.1f)
+        if (obstacle != null)
+            obstacle.enabled = !open; // blocãm AI doar când e închisã
+
+        Quaternion targetRotation = open ? openRotation : closedRotation;
+
+        while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f)
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * openSpeed);
+            if (blockedByPlayer)
+                yield break;
+        
+            transform.rotation = Quaternion.Slerp(transform.rotation,targetRotation,Time.deltaTime * openSpeed);
             yield return null;
         }
+
         transform.rotation = targetRotation;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+            blockedByPlayer = true;
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+            blockedByPlayer = false;
     }
 
 }
