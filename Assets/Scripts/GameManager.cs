@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            //SceneManager.sceneLoaded += OnSceneLoaded;
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
 
     void OnDestroy()
     {
-        //SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
     
     // TRANZITIE SI SAVE
@@ -182,17 +182,14 @@ public class GameManager : MonoBehaviour
         Cursor.visible = true;
         Time.timeScale = 1f;
     }
-    // 1. Verificăm dacă există un EventSystem în noua scenă
     if (FindObjectOfType<EventSystem>() == null)
     {
-        // 2. Dacă nu există (cum se întâmplă când te întorci în meniu), îl creăm
         GameObject eventSystem = new GameObject("EventSystem");
         eventSystem.AddComponent<EventSystem>();
         eventSystem.AddComponent<StandaloneInputModule>();
         Debug.Log("GameManager: EventSystem a fost creat automat pentru scena: " + scene.name);
     }
 
-    // 3. Deblocăm mouse-ul și timpul dacă suntem în meniu
     if (scene.name == "menu")
     {
         Cursor.lockState = CursorLockMode.None;
